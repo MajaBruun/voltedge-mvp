@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Secrets læses fra .env-fil lokalt (aldrig committet til Git)
+      PRICE_PER_KWH: ${PRICE_PER_KWH:-2.50}
+      DB_PATH: /data/voltedge.db
+    volumes:
+      # Database persisteres på host så data overlever container-genstarter
+      - voltedge_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  voltedge_data:
