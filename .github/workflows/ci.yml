@@ -35,7 +35,6 @@ jobs:
       - name: Kør tests
         env:
           PRICE_PER_KWH: "2.50"
-          DB_PATH: ":memory:"
         run: pytest tests/ -v --tb=short
 
   build:
