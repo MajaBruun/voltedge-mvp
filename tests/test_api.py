@@ -1,23 +1,20 @@
 """
-API-tests (rapportens afsnit 5.1):
-  'API-tests verificerer at platformens endpoints opfører sig korrekt fra et
-   eksternt perspektiv — at en POST /sessions returnerer det forventede svar,
-   at fejlbehæftede requests håndteres med korrekte HTTP-statuskoder.'
-
-Bruger in-memory SQLite (DB_PATH=:memory:) så tests aldrig rammer produktionsdata.
+API-tests (rapportens afsnit 5.1).
+Bruger en midlertidig fil-database så tests aldrig rammer produktionsdata.
 """
 
 import os
+import tempfile
 import pytest
 
-# Sæt test-database FØR app importeres (env-variabel læses ved import)
-os.environ["DB_PATH"] = ":memory:"
+_tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+_tmp.close()
+os.environ["DB_PATH"] = _tmp.name
 os.environ["PRICE_PER_KWH"] = "2.50"
 
 from fastapi.testclient import TestClient
 from app.main import app, startup
 
-# Kald startup manuelt (TestClient kører ikke lifespan events i alle versioner)
 startup()
 
 client = TestClient(app)
