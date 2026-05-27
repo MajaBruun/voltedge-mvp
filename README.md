@@ -189,3 +189,6 @@ Disse elementer er beskrevet i rapporten men ikke implementeret i MVP:
 | Container | Docker + Compose | Miljøuafhængig deployment |
 | CI/CD | GitHub Actions | Integreret med versionsstyring |
 | Secrets | `.env` lokalt / GitHub Secrets i CI | Shift-left sikkerhed (afsnit 5.2) |
+
+<img width="452" height="523" alt="image" src="https://github.com/user-attachments/assets/08edfbad-5616-4ce7-ac92-c41273d5e20c" />
+
